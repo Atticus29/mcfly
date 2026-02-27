@@ -40,3 +40,33 @@ export interface Article {
  * Keeps network I/O decoupled from business logic (AC-05).
  */
 export type FetchArticlesFn = (journalId: string, page: number) => Promise<Article[]>
+
+// ─── Slice 2: supplementary bundle types ─────────────────────────────────────
+
+/** A single file within a supplementary material bundle. */
+export interface SupplementaryFile {
+  /** Filename including extension, e.g. "analysis.py" */
+  name: string
+  /** Absolute path to the temporarily downloaded file on disk */
+  localPath: string
+  /** File size in bytes */
+  sizeBytes: number
+}
+
+/** A downloaded supplementary material bundle for one article. */
+export interface SupplementaryBundle {
+  /** ID of the article this bundle belongs to */
+  articleId: string
+  /** Title of the article this bundle belongs to */
+  articleTitle: string
+  /** All files extracted into the temp directory */
+  files: SupplementaryFile[]
+  /** Absolute path to the temporary directory holding extracted files */
+  tempDir: string
+}
+
+/**
+ * Injectable function that downloads and extracts the supplementary bundle
+ * for a single article. Keeps network/filesystem I/O out of business logic.
+ */
+export type DownloadBundleFn = (article: Article) => Promise<SupplementaryBundle>
