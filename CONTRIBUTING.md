@@ -1,0 +1,4 @@
+- Always add/adjust tests for new behavior
+- No secrets in code
+- Prefer small functions
+- Add docstrings / comments for non-obvious logic
